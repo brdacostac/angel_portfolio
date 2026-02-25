@@ -1,9 +1,9 @@
 ---
-const email = "angel@example.com";
+const email = "angelkahealani@gmail.com";
 
 const socials = [
-  { label: "Instagram", url: "https://instagram.com/" },
-  { label: "IMDb", url: "https://imdb.com/" },
+  { label: "Instagram", url: "https://www.instagram.com/Angel.Kahealani" },
+  { label: "Casting Call Club", url: "https://imdb.com/" },
   { label: "LinkedIn", url: "https://linkedin.com/" },
 ];
 ---
@@ -163,7 +163,7 @@ const socials = [
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.15em;
-    color: var(--warm-gray);
+    color: var(--ivory-muted);
   }
 
   .form-group input,
@@ -176,19 +176,20 @@ const socials = [
     font-size: 0.95rem;
     font-weight: 300;
     color: var(--text);
-    transition: border-color var(--duration) var(--ease);
+    transition: border-color var(--duration) var(--ease), background var(--duration) var(--ease);
     resize: vertical;
   }
 
   .form-group input::placeholder,
   .form-group textarea::placeholder {
-    color: var(--text-light);
+    color: var(--ivory-light);
   }
 
   .form-group input:focus,
   .form-group textarea:focus {
     outline: none;
     border-color: var(--accent);
+    background: rgba(36, 16, 24, 0.9);
   }
 
   @media (max-width: 768px) {

@@ -1,38 +1,39 @@
 /* ========================================
-   WARM CINEMA — Design System
-   Light editorial aesthetic with terracotta accents
+   CABARET SOMBRE — Design System
+   Dark velvet: espresso depths, blush rose, warm ivory
    ======================================== */
 
 :root {
-  /* Light Palette */
-  --cream: #FAF7F4;
-  --cream-alt: #F3EDE7;
-  --white: #FFFFFF;
-  --warm-border: #E4DDD6;
+  /* Dark Foundation — espresso e veludo noturno */
+  --rose-deep: #0F0608;
+  --plum-dark: #1A0C14;
+  --plum-card: #241018;
+  --plum-mid: #321A28;
 
-  /* Dark Tones */
-  --ink: #2C221B;
-  --ink-light: #4A3D33;
-  --warm-gray: #7A6E64;
-  --warm-gray-light: #A69A8F;
+  /* Accent — rosa como boca de batom */
+  --blush: #E8688A;
+  --blush-hover: #D4547A;
+  --blush-dim: rgba(232, 104, 138, 0.12);
+  /* Caramelo de luz de ribalta */
+  --gold: #D4A070;
+  --gold-dim: rgba(212, 160, 112, 0.12);
 
-  /* Accent */
-  --terracotta: #B86E56;
-  --terracotta-hover: #A35D47;
-  --terracotta-dim: rgba(184, 110, 86, 0.1);
-  --gold: #9E8560;
-  --gold-dim: rgba(158, 133, 96, 0.1);
+  /* Text — marfim aquecido */
+  --ivory: #F5E8E0;
+  --ivory-muted: #C4A0AC;
+  --ivory-light: #9C787E;
 
   /* Semantic */
-  --bg: var(--cream);
-  --bg-alt: var(--cream-alt);
-  --bg-card: var(--white);
-  --text: var(--ink);
-  --text-muted: var(--warm-gray);
-  --text-light: var(--warm-gray-light);
-  --accent: var(--terracotta);
-  --accent-hover: var(--terracotta-hover);
-  --border: var(--warm-border);
+  --bg: var(--rose-deep);
+  --bg-alt: var(--plum-dark);
+  --bg-card: var(--plum-card);
+  --text: var(--ivory);
+  --text-muted: var(--ivory-muted);
+  --text-light: var(--ivory-light);
+  --accent: var(--blush);
+  --accent-hover: var(--blush-hover);
+  --accent-dim: var(--blush-dim);
+  --border: rgba(232, 104, 138, 0.15);
 
   /* Typography */
   --font-display: 'Bodoni Moda', 'Didot', 'Times New Roman', serif;
@@ -52,9 +53,9 @@
   --nav-height: 64px;
 
   /* Effects */
-  --shadow: 0 4px 24px rgba(44, 34, 27, 0.08);
-  --shadow-lg: 0 12px 48px rgba(44, 34, 27, 0.12);
-  --shadow-glow: 0 0 60px rgba(184, 110, 86, 0.06);
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 48px rgba(0, 0, 0, 0.7);
+  --shadow-glow: 0 0 60px rgba(232, 104, 138, 0.12);
   --radius-sm: 4px;
   --radius: 8px;
   --radius-lg: 16px;
@@ -84,20 +85,24 @@ body {
   font-family: var(--font-body);
   color: var(--text);
   background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232, 104, 138, 0.07) 0%, transparent 60%),
+    linear-gradient(160deg, #0F0608 0%, #1A0C14 45%, #120810 100%);
+  background-attachment: fixed;
   line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Subtle paper texture */
+/* Subtle grain texture */
 body::after {
   content: '';
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 9999;
-  opacity: 0.02;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
 }
 
@@ -122,9 +127,15 @@ ul {
 }
 
 ::selection {
-  background: var(--terracotta);
-  color: white;
+  background: var(--blush);
+  color: #fff;
 }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--plum-dark); }
+::-webkit-scrollbar-thumb { background: rgba(232, 104, 138, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--blush); }
 
 /* ========================================
    Typography
@@ -132,7 +143,7 @@ ul {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  color: var(--ink);
+  color: var(--ivory);
   line-height: 1.1;
   font-weight: 400;
   letter-spacing: -0.01em;
@@ -177,7 +188,7 @@ p {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: var(--accent);
+  color: var(--gold);
   margin-bottom: var(--space-sm);
   display: block;
 }
@@ -217,12 +228,12 @@ p {
   border-color: var(--accent-hover);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(184, 110, 86, 0.25);
+  box-shadow: 0 4px 24px rgba(232, 104, 138, 0.35);
 }
 
 .btn-ghost {
   background: transparent;
-  color: var(--ink);
+  color: var(--ivory);
   border-color: var(--border);
 }
 
