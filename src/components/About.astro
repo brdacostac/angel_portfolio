@@ -1,0 +1,121 @@
+---
+const bio = `Hello! My name is Angel Kahealani and I'm an actor and voice actor based in South Florida. I love baking, gaming, cosplaying, animals, and anime! I hope you'll stick around and join me on this acting adventure!`;
+
+const skills = [
+  "Stage & Screen Acting",
+  "Voice Acting",
+  "Classical Theater",
+  "Improvisation",
+  "Movement & Dance",
+  "Dialect Work",
+];
+---
+
+<section class="about section" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-left reveal">
+        <span class="section-label">About Me</span>
+        <h2 class="about-heading">The story<br /><em>so far</em></h2>
+      </div>
+
+      <div class="about-right">
+        <p class="about-bio reveal reveal-delay-1">{bio}</p>
+
+        <div class="about-skills reveal reveal-delay-2">
+          {skills.map((skill) => (
+            <span class="skill-tag">{skill}</span>
+          ))}
+        </div>
+
+        <a href="#contact" class="btn btn-ghost reveal reveal-delay-3">
+          Let's Work Together
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+            <path d="M1 13L13 1M13 1H5M13 1v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Decorative line -->
+  <div class="section-line"></div>
+</section>
+
+<style>
+  .about {
+    background: var(--bg);
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
+
+  .about-left {
+    position: sticky;
+    top: calc(var(--nav-height) + var(--space-lg));
+  }
+
+  .about-heading {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.05;
+  }
+
+  .about-heading em {
+    color: var(--accent);
+    font-style: italic;
+  }
+
+  .about-bio {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-bottom: var(--space-md);
+  }
+
+  .about-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
+  }
+
+  .skill-tag {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid var(--border);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    color: var(--warm-gray);
+    transition: all var(--duration) var(--ease);
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .section-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  @media (max-width: 768px) {
+    .about-layout {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .about-left {
+      position: static;
+    }
+  }
+</style>
