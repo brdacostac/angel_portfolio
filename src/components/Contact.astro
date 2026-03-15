@@ -3,10 +3,13 @@ const email = "angelkahealani@gmail.com";
 
 const socials = [
   { label: "Instagram", url: "https://www.instagram.com/Angel.Kahealani" },
-  { label: "Casting Call Club", url: "https://www.castingcallclub.com/" },
-  { label: "Backstage", url: "https://www.backstage.com/" },
-  { label: "Actors Access", url: "https://www.actorsaccess.com/" },
+  { label: "Casting Call Club", url: "https://www.castingcall.club/angelkahealani" },
+  { label: "Backstage", url: "https://www.backstage.com/u/angel-kahealani/" },
+  { label: "Actors Access", url: "https://resumes.actorsaccess.com/2670462-7265614" },
 ];
+
+
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/mbdzavql";
 ---
 
 <section class="contact section" id="contact">
@@ -43,39 +46,114 @@ const socials = [
         </div>
       </div>
 
-      <form class="contact-form reveal reveal-delay-1" action="#" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your name" />
+      <div class="form-wrapper reveal reveal-delay-1">
+        <form
+          class="contact-form"
+          id="contact-form"
+          data-endpoint={FORMSPREE_ENDPOINT}
+          novalidate
+        >
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Name <span class="required" aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" required autocomplete="name" placeholder="Your name" />
+            </div>
+
+            <div class="form-group">
+              <label for="email-input">Email <span class="required" aria-hidden="true">*</span></label>
+              <input type="email" id="email-input" name="email" required autocomplete="email" placeholder="you@email.com" />
+            </div>
           </div>
 
           <div class="form-group">
-            <label for="email-input">Email</label>
-            <input type="email" id="email-input" name="email" required autocomplete="email" placeholder="you@email.com" />
+            <label for="subject">Subject <span class="required" aria-hidden="true">*</span></label>
+            <input type="text" id="subject" name="subject" required placeholder="What's this about?" />
           </div>
-        </div>
 
-        <div class="form-group">
-          <label for="subject">Subject</label>
-          <input type="text" id="subject" name="subject" placeholder="What's this about?" />
-        </div>
+          <div class="form-group">
+            <label for="message">Message <span class="required" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
+          </div>
 
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" rows="5" required placeholder="Tell me about your project..."></textarea>
-        </div>
+          <div class="form-error" id="form-error" role="alert" aria-live="polite"></div>
 
-        <button type="submit" class="btn btn-primary">
-          Send Message
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-            <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </button>
-      </form>
+          <button type="submit" class="btn btn-primary" id="submit-btn">
+            <span class="btn-label">Send Message</span>
+            <svg class="btn-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M1 7h12m0 0L8 2m5 5L8 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <svg class="btn-spinner" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="28" stroke-dashoffset="10"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="form-success" id="form-success" aria-live="polite">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+              <circle cx="14" cy="14" r="13" stroke="var(--accent)" stroke-width="1.5"/>
+              <path d="M8 14l4 4 8-8" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="success-heading">Message sent.</p>
+          <p class="success-body">Thank you for reaching out — I'll get back to you soon.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  const successEl = document.getElementById("form-success") as HTMLElement | null;
+  const errorEl = document.getElementById("form-error") as HTMLElement | null;
+  const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const endpoint = form.dataset.endpoint ?? "";
+
+    // Loading state
+    submitBtn?.classList.add("loading");
+    if (submitBtn) submitBtn.disabled = true;
+    if (errorEl) errorEl.textContent = "";
+
+    try {
+      const data = new FormData(form);
+      const res = await fetch(endpoint, {
+        method: "POST",
+        body: data,
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        // Show success
+        form.style.display = "none";
+        if (successEl) successEl.classList.add("visible");
+      } else {
+        const json = await res.json().catch(() => ({}));
+        const msg =
+          (json as { errors?: Array<{ message: string }> }).errors
+            ?.map((err) => err.message)
+            .join(", ") ?? "Something went wrong. Please try again.";
+        if (errorEl) errorEl.textContent = msg;
+      }
+    } catch {
+      if (errorEl)
+        errorEl.textContent =
+          "Unable to send — check your connection and try again.";
+    } finally {
+      submitBtn?.classList.remove("loading");
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+</script>
 
 <style>
   .contact {
@@ -141,6 +219,12 @@ const socials = [
     color: var(--accent);
   }
 
+  /* Form wrapper holds both form and success state */
+  .form-wrapper {
+    position: relative;
+    min-height: 300px;
+  }
+
   /* Form */
   .contact-form {
     display: flex;
@@ -168,6 +252,11 @@ const socials = [
     color: var(--ivory-muted);
   }
 
+  .required {
+    color: var(--accent);
+    margin-left: 1px;
+  }
+
   .form-group input,
   .form-group textarea {
     padding: 0.85rem 1rem;
@@ -192,6 +281,74 @@ const socials = [
     outline: none;
     border-color: var(--accent);
     background: rgba(36, 16, 24, 0.9);
+  }
+
+  /* Error message */
+  .form-error {
+    font-size: 0.85rem;
+    color: #e07070;
+    min-height: 1.2em;
+    line-height: 1.4;
+  }
+
+  /* Button states */
+  .btn-spinner {
+    display: none;
+    animation: spin 0.8s linear infinite;
+  }
+
+  #submit-btn.loading .btn-label,
+  #submit-btn.loading .btn-arrow {
+    display: none;
+  }
+
+  #submit-btn.loading .btn-spinner {
+    display: block;
+  }
+
+  #submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding: var(--space-lg) 0;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+  }
+
+  .form-success.visible {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .success-icon {
+    margin-bottom: var(--space-xs);
+  }
+
+  .success-heading {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text);
+    margin: 0;
+  }
+
+  .success-body {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
   }
 
   /* Tight desktops — reduce h2 size so it doesn't crowd */
