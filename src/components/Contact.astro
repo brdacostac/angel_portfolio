@@ -3,8 +3,9 @@ const email = "angelkahealani@gmail.com";
 
 const socials = [
   { label: "Instagram", url: "https://www.instagram.com/Angel.Kahealani" },
-  { label: "Casting Call Club", url: "https://imdb.com/" },
-  { label: "LinkedIn", url: "https://linkedin.com/" },
+  { label: "Casting Call Club", url: "https://www.castingcallclub.com/" },
+  { label: "Backstage", url: "https://www.backstage.com/" },
+  { label: "Actors Access", url: "https://www.actorsaccess.com/" },
 ];
 ---
 
@@ -13,7 +14,7 @@ const socials = [
     <div class="contact-layout">
       <div class="contact-left reveal">
         <span class="section-label">Contact</span>
-        <h2>Let's<br /><em>connect</em></h2>
+        <h2>Let's <em>connect</em></h2>
 
         <div class="contact-details">
           <div class="contact-email">
@@ -84,7 +85,7 @@ const socials = [
   .contact-layout {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    gap: var(--space-2xl);
+    gap: clamp(2rem, 5vw, 6rem);
     align-items: start;
   }
 
@@ -122,7 +123,8 @@ const socials = [
 
   .social-links {
     display: flex;
-    gap: var(--space-md);
+    flex-wrap: wrap;
+    gap: var(--space-sm) var(--space-md);
   }
 
   .social-link {
@@ -192,18 +194,28 @@ const socials = [
     background: rgba(36, 16, 24, 0.9);
   }
 
-  @media (max-width: 768px) {
+  /* Tight desktops — reduce h2 size so it doesn't crowd */
+  @media (max-width: 900px) {
+    .contact-left h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+  }
+
+  /* Stack below 820px — avoids cramped two-column at ~800px */
+  @media (max-width: 820px) {
     .contact-layout {
       grid-template-columns: 1fr;
       gap: var(--space-lg);
     }
 
     .form-row {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
     }
+  }
 
-    .social-links {
-      flex-wrap: wrap;
+  @media (max-width: 480px) {
+    .form-row {
+      grid-template-columns: 1fr;
     }
   }
 </style>

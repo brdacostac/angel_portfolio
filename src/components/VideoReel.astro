@@ -1,44 +1,58 @@
 ---
-const reel = {
+const videoReel = {
   title: "Acting Reel 2025",
-  description: "A compilation of recent film, theater, and voice work showcasing range and versatility.",
   embedUrl: "", /* Replace with YouTube/Vimeo embed URL */
 };
 ---
 
-<section class="video-reel section" id="video-reel">
+<section class="reels section" id="video-reel">
   <div class="container">
-    <div class="reel-header reveal">
-      <span class="section-label">Video Reel</span>
-      <h2>See the<br /><em>work</em></h2>
+    <div class="reels-header reveal">
+      <span class="section-label">Reels</span>
+      <h2>Get a <em>taste</em></h2>
     </div>
 
-    <div class="reel-content reveal reveal-delay-1">
-      <div class="reel-player">
-        {reel.embedUrl ? (
-          <iframe
-            src={reel.embedUrl}
-            title={reel.title}
-            allowfullscreen
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          ></iframe>
-        ) : (
-          <div class="reel-placeholder">
-            <div class="placeholder-icon">
-              <svg width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-                <circle cx="28" cy="28" r="27" stroke="currentColor" stroke-width="1"/>
-                <polygon points="22,18 22,38 40,28" fill="currentColor"/>
-              </svg>
-            </div>
-            <p class="placeholder-text">Video reel coming soon</p>
+    <div class="reels-grid reveal reveal-delay-1">
+
+      <!-- Voice Reel — LEFT -->
+      <div class="reel-column">
+        <p class="reel-col-label">Voice Reel</p>
+        <div class="reel-card reel-card--voice">
+          <div class="waveform">
+            {Array.from({ length: 36 }).map((_, i) => {
+              const h = 20 + Math.sin(i * 0.5) * 28 + Math.cos(i * 0.9) * 14;
+              return <div class="wave-bar" style={`height: ${h}%`} />;
+            })}
           </div>
-        )}
+          <p class="reel-placeholder-text">Voice reel coming soon</p>
+        </div>
       </div>
 
-      <div class="reel-info">
-        <h3>{reel.title}</h3>
-        <p>{reel.description}</p>
+      <!-- Video Reel — RIGHT -->
+      <div class="reel-column">
+        <p class="reel-col-label">Video Reel</p>
+        <div class="reel-card reel-card--video">
+          {videoReel.embedUrl ? (
+            <iframe
+              src={videoReel.embedUrl}
+              title={videoReel.title}
+              allowfullscreen
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            ></iframe>
+          ) : (
+            <>
+              <div class="placeholder-icon">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+                  <circle cx="24" cy="24" r="23" stroke="currentColor" stroke-width="1"/>
+                  <polygon points="19,14 19,34 36,24" fill="currentColor"/>
+                </svg>
+              </div>
+              <p class="reel-placeholder-text">Video reel coming soon</p>
+            </>
+          )}
+        </div>
       </div>
+
     </div>
   </div>
 
@@ -46,45 +60,54 @@ const reel = {
 </section>
 
 <style>
-  .video-reel {
+  .reels {
     background: var(--bg-alt);
   }
 
-  .reel-header {
+  .reels-header {
     margin-bottom: var(--space-lg);
   }
 
-  .reel-header h2 {
+  .reels-header h2 {
     font-size: clamp(2.5rem, 5vw, 4rem);
     line-height: 1.05;
   }
 
-  .reel-header em {
+  /* explicit selector to guarantee accent color on em */
+  .reels-header h2 em {
     color: var(--accent);
     font-style: italic;
   }
 
-  .reel-content {
-    max-width: 900px;
+  /* Two columns, side-by-side — voice LEFT, video RIGHT */
+  .reels-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    align-items: start;
   }
 
-  .reel-player {
-    aspect-ratio: 16 / 9;
+  .reel-column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  /* Column label sitting above each card */
+  .reel-col-label {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    max-width: none;
+  }
+
+  .reel-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
     overflow: hidden;
-    margin-bottom: var(--space-md);
-  }
-
-  .reel-player iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-  }
-
-  .reel-placeholder {
-    width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -92,34 +115,59 @@ const reel = {
     gap: var(--space-sm);
   }
 
+  .reel-card--voice {
+    padding: var(--space-lg) var(--space-md);
+    min-height: 220px;
+  }
+
+  .reel-card--video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .reel-card--video iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+  }
+
+  /* Waveform */
+  .waveform {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 72px;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .wave-bar {
+    width: 3px;
+    background: var(--accent);
+    opacity: 0.4;
+    border-radius: 2px;
+    animation: wavePulse 3s ease-in-out infinite;
+  }
+
+  .wave-bar:nth-child(odd) { animation-delay: 0.15s; }
+  .wave-bar:nth-child(3n) { animation-delay: 0.35s; }
+
+  @keyframes wavePulse {
+    0%, 100% { opacity: 0.25; }
+    50% { opacity: 0.6; }
+  }
+
+  /* Placeholder */
   .placeholder-icon {
     color: var(--accent);
-    opacity: 0.4;
-    transition: opacity 0.5s var(--ease);
+    opacity: 0.35;
   }
 
-  .reel-placeholder:hover .placeholder-icon {
-    opacity: 0.7;
-  }
-
-  .placeholder-text {
-    font-size: 0.85rem;
+  .reel-placeholder-text {
+    font-size: 0.8rem;
     color: var(--text-light);
     letter-spacing: 0.05em;
-  }
-
-  .reel-info h3 {
-    font-family: var(--font-body);
-    font-weight: 500;
-    font-size: 1.1rem;
-    margin-bottom: var(--space-xs);
-  }
-
-  .reel-info p {
-    color: var(--warm-gray);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    font-weight: 300;
+    max-width: none;
   }
 
   .section-line {
@@ -129,5 +177,12 @@ const reel = {
     right: 0;
     height: 1px;
     background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
+  /* Stack only below 600px — keeps two columns at 800px+ */
+  @media (max-width: 600px) {
+    .reels-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
