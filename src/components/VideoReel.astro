@@ -1,8 +1,26 @@
 ---
-const videoReel = {
-  title: "Acting Reel 2025",
-  embedUrl: "", /* Replace with YouTube/Vimeo embed URL */
-};
+import { videoReel } from "../data/content";
+
+function toEmbedUrl(url: string): string {
+  if (!url) return "";
+
+  // Already an embed URL — use as-is
+  if (url.includes("/embed/") || url.includes("player.vimeo.com")) return url;
+
+  // YouTube: youtube.com/watch?v=ID  or  youtu.be/ID
+  const ytMatch =
+    url.match(/youtube\.com\/watch\?v=([\w-]+)/) ||
+    url.match(/youtu\.be\/([\w-]+)/);
+  if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+
+  // Vimeo: vimeo.com/ID
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+
+  return url;
+}
+
+const embedUrl = toEmbedUrl(videoReel.videoUrl);
 ---
 
 <section class="reels section" id="video-reel">
@@ -83,9 +101,9 @@ const videoReel = {
       <div class="reel-column">
         <p class="reel-col-label">Video Reel</p>
         <div class="reel-card reel-card--video">
-          {videoReel.embedUrl ? (
+          {embedUrl ? (
             <iframe
-              src={videoReel.embedUrl}
+              src={embedUrl}
               title={videoReel.title}
               allowfullscreen
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
