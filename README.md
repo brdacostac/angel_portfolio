@@ -1,43 +1,75 @@
-# Astro Starter Kit: Minimal
+# Angel Kahealani — Portfolio
 
-```sh
-npm create astro@latest -- --template minimal
+Personal portfolio website for Angel Kahealani, actor and voice actor based in South Florida. Built as a fast, fully static site with no heavy frameworks.
+
+**Live site:** *(add your Netlify/Vercel URL here once deployed)*
+
+---
+
+## What's on the site
+
+- **Hero** — intro with name, tagline, and links to resume & contact
+- **Gallery** — production photos with captions
+- **Projects** — list of acting and voice work
+- **Voice Reel** — audio player with seek and volume controls
+- **Contact** — working contact form (powered by Formspree)
+
+---
+
+## Tech stack
+
+- [Astro 6](https://astro.build) — static site generator
+- Vanilla CSS with custom design tokens (no Tailwind, no UI library)
+- Vanilla JS for audio player and contact form
+- [Formspree](https://formspree.io) for contact form email delivery
+
+---
+
+## Adding content
+
+All content Angel needs to update lives in one file:
+
+**[`src/data/content.ts`](src/data/content.ts)**
+
+That file has step-by-step instructions in plain English for:
+- Adding new gallery photos
+- Adding new projects
+- Adding the video reel URL when it's ready
+
+---
+
+## Running locally
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Opens at `http://localhost:4321`
 
-## 🚀 Project Structure
+---
 
-Inside of your Astro project, you'll see the following folders and files:
+## Deploying
 
-```text
-/
+```bash
+npm run build
+```
+
+Output goes to `dist/`. Deploy that folder to Netlify or Vercel.
+
+## Project structure
+
+```
+angel_portfolio/
 ├── public/
+│   ├── images/          ← photo files go here
+│   ├── audio/           ← voice reel mp3 goes here
+│   └── favicon.svg
 ├── src/
+│   ├── data/
+│   │   └── content.ts   ← ✏️  edit content here
+│   ├── components/      ← site sections (Hero, Gallery, Contact…)
+│   ├── layouts/
 │   └── pages/
-│       └── index.astro
 └── package.json
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
