@@ -2,8 +2,6 @@
 
 Personal portfolio website for Angel Kahealani, actor and voice actor based in South Florida. Built as a fast, fully static site with no heavy frameworks.
 
-**Live site:** *(add your Netlify/Vercel URL here once deployed)*
-
 ---
 
 ## What's on the site
@@ -31,7 +29,7 @@ All content Angel needs to update lives in one file:
 
 **[`src/data/content.ts`](src/data/content.ts)**
 
-That file has step-by-step instructions in plain English for:
+That file has step-by-step instructions for:
 - Adding new gallery photos
 - Adding new projects
 - Adding the video reel URL when it's ready
@@ -48,14 +46,6 @@ npm run dev
 Opens at `http://localhost:4321`
 
 ---
-
-## Deploying
-
-```bash
-npm run build
-```
-
-Output goes to `dist/`. Deploy that folder to Netlify or Vercel.
 
 ## Project structure
 
